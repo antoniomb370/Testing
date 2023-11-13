@@ -20,7 +20,6 @@ public class SearchAndAddToCartTest {
     @BeforeAll
     public static void init() {
         extent = ExtentFactory.getInstance();
-
     }
 
     @BeforeEach
@@ -45,7 +44,9 @@ public class SearchAndAddToCartTest {
     @Test
     public void testSearchAndAddToCart() {
         searchProduct("iPhone");
+        verifySearchResults();
         addToCart();
+
         pause(5000);
         driver.quit();
     }
@@ -57,14 +58,22 @@ public class SearchAndAddToCartTest {
         test.log(Status.PASS, "El campo de búsqueda se rellena correctamente");
         WebElement searchButton = driver.findElement(By.xpath("//*[@id=\"search\"]/span/button"));
         searchButton.click();
+        test.log(Status.PASS, "Se hace clic en el botón de búsqueda");
         pause(5000);
         Assertions.assertTrue(driver.getCurrentUrl().contains("search=" + productName), "User is not redirected to the search results page");
         test.log(Status.PASS, "El usuario es redirigido a la página de resultados de búsqueda");
     }
 
+    private void verifySearchResults() {
+        WebElement searchResults = driver.findElement(By.cssSelector(".product-thumb"));
+        Assertions.assertTrue(searchResults.isDisplayed(), "Search results are not displayed");
+        test.log(Status.PASS, "Los resultados de la búsqueda se muestran correctamente");
+    }
+
     private void addToCart() {
         WebElement addToCartButton = driver.findElement(By.xpath("//*[@id=\"content\"]/div[3]/div/div/div[2]/div[2]/button[1]"));
         addToCartButton.click();
+        test.log(Status.PASS, "El usuario hace clic en el botón 'Añadir al carrito");
         pause(5000);
 
         WebElement successMessage = driver.findElement(By.cssSelector(".alert.alert-success.alert-dismissible"));
