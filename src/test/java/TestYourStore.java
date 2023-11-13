@@ -32,6 +32,7 @@ public class TestYourStore {
         driver.get("https://opencart.abstracta.us/index.php?route=common/home");
         driver.manage().window().maximize();
         test = extent.createTest(" Registro de usuario");
+        test.log(Status.PASS, "Se ingreso correctamente a la pagina");
         System.out.println(" Se ingreso correctamnete a: " + driver.getTitle());
         pause(5000);
         testUser = new User("John", "Doe", "jhdirose" + randomNumber + "@gmail.com", "1234567890", "123456", "123456");
@@ -61,7 +62,7 @@ public class TestYourStore {
     private void clickOnMyAccount() throws Exception {
         WebElement myAccountLink = driver.findElement(By.cssSelector("a[title='My Account']"));
         myAccountLink.click();
-        pause(5000);
+        test.log(Status.PASS, "Se hace click correctamente en el link de My Account");
 
         // Verificar que aparece la ventana emergente con las opciones "Register" e "Login"
         WebElement registerOption = driver.findElement(By.xpath("//*[@id=\"top-links\"]/ul/li[2]/ul/li[1]/a"));
@@ -81,6 +82,7 @@ public class TestYourStore {
 
         WebElement registerLink = driver.findElement(By.xpath("//*[@id=\"top-links\"]/ul/li[2]/ul/li[1]/a"));
         registerLink.click();
+        test.log(Status.PASS, "Se hace click correctamente en el link de Register");
         pause(5000);
         WebElement registerForm = driver.findElement(By.xpath("//*[@id=\"content\"]/form"));
 
